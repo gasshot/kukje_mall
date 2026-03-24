@@ -1,0 +1,75 @@
+.k-footer-wrapper {
+  width: 100%;
+  background-color: #f5f5f5; /* 약한 회색 */
+  border-top: 1px solid #e0e0e0;
+  padding: 50px 0; /* 상하 여백 확대 */
+}
+
+.k-footer-container {
+  width: 100%; /* 메인 컨텐츠와 동일한 너비 */
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start; /* 왼쪽부터 배치 */
+  align-items: flex-start;
+}
+
+/* --- 개별 섹션 공통 스타일 --- */
+.k-footer-section {
+  text-align: left; /* 내부 텍스트 왼쪽 정렬 */
+  flex-shrink: 0;   /* 크기 고정 */
+}
+
+/* 회사 정보 섹션 마진 */
+.company-info {
+  width: 500px;
+  margin-right: 100px; /* 수강 정보와의 간격 (마진) */
+  padding-left: 20px;  /* 왼쪽 끝에서 살짝 띄움 */
+}
+
+/* 수강 정보 섹션 마진 */
+.course-info {
+  width: 400px;
+}
+
+/* --- 상세 텍스트 스타일 --- */
+.k-footer-logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.k-info-text p {
+  font-size: 14px;
+  color: #666;
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+.k-course-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #444;
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #ddd;
+  display: inline-block; /* 텍스트 길이에 맞춰 바닥선 생성 */
+}
+
+.k-course-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.k-course-list li {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.k-copyright {
+  margin-top: 30px !important;
+  font-size: 12px !important;
+  color: #aaa !important;
+}

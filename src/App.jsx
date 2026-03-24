@@ -1,73 +1,53 @@
 import { useState } from 'react';
-import http from './api/http';
-import './App.css'; // CSS 파일 임포트
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import KukjeHeader from './Components/KukjeHeader';
+import KukjeFooter from './Components/KukjeFooter';
+import TabMenu from './Components/TabMenu'; // 분리한 컴포넌트 임포트
+import Home from './Components/Home';
+import Login from './Components/Login';
+import './App.css';
 
 function App() {
-  const [formData, setFormData] = useState({ id: '', pw: '' });
-  const [message, setMessage] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('accessToken'));
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await http.post('/login', formData);
-      if (response.accessToken) {
-        localStorage.setItem('accessToken', response.accessToken);
-        setIsLoggedIn(true);
-        setMessage(`반갑습니다, ${response.user.name}님!`);
-      }
-    } catch (error) {
-      setMessage(error.response?.data?.message || '로그인 실패');
-    }
-  };
+  const [message, setMessage] = useState('');
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
     setIsLoggedIn(false);
     setMessage('');
+    alert('로그아웃 되었습니다.');
   };
 
-  if (isLoggedIn) {
-    return (
-      <div className="welcome-box">
-        <h2>국제몰 관리자 페이지</h2>
-        <p>{message}</p>
-        <button onClick={handleLogout} className="logout-btn">로그아웃</button>
-      </div>
-    );
-  }
+  const handleSearch = (term) => {
+    console.log("국제몰 검색어:", term);
+  };
 
   return (
-    <div className="login-container">
-      <div className="login-card">
-        <h1>Kukje Mall</h1>
-        <form onSubmit={handleLogin} className="login-form">
-          <input
-            type="text"
-            name="id"
-            placeholder="아이디"
-            value={formData.id}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="password"
-            name="pw"
-            placeholder="비밀번호"
-            value={formData.pw}
-            onChange={handleChange}
-            required
-          />
-          <button type="submit">로그인</button>
-        </form>
-        {message && <p className="message">{message}</p>}
+    <Router>
+      <div className="app-main-container">
+        {/* 1. 최상단 고정 헤더 영역 */}
+        <KukjeHeader onSearch={handleSearch} />
+
+        {/* 2. 중앙 컨텐츠 영역 */}
+        <div className="app-wrapper">
+          {/* 분리된 탭 메뉴 컴포넌트 호출 */}
+          <TabMenu isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+
+          <div className="tab-content">
+            <Routes>
+              <Route path="/" element={<Home isLoggedIn={isLoggedIn} message={message} />} />
+              <Route 
+                path="/login" 
+                element={<Login setIsLoggedIn={setIsLoggedIn} setMessage={setMessage} message={message} />} 
+              />
+            </Routes>
+          </div>
+        </div>
+
+        {/* 3. 최하단 푸터 영역 */}
+        <KukjeFooter />
       </div>
-    </div>
+    </Router>
   );
 }
 

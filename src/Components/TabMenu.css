@@ -1,0 +1,83 @@
+/* 1. 메뉴 바 전체: 왼쪽 정렬 */
+.tab-menu-container {
+  display: flex !important;
+  justify-content: flex-start !important;
+  width: 100%;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  height: 50px;
+}
+
+/* 2. 카테고리 래퍼 */
+.category-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 20px; /* 로고 위치와 맞춤 */
+  height: 100%;
+}
+
+/* 3. 트리거 영역 */
+.category-trigger-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ★ 핵심: 아이콘 커서 포인터 설정 ★ */
+.hamburger-icon {
+  font-size: 24px;
+  color: #333;
+  
+  /* 영역이 없으면 커서가 안 변하므로 블록화 */
+  display: inline-block !important; 
+  cursor: pointer !important; /* 강제로 손가락 모양 적용 */
+  
+  padding: 5px 10px; /* 클릭하기 편하게 영역 확장 */
+  user-select: none;
+  transition: color 0.2s;
+}
+
+/* 마우스 올렸을 때 색상 변화로 반응 확인 */
+.hamburger-icon:hover {
+  color: #007bff !important;
+}
+
+/* 글자 부분은 커서 기본값 */
+.category-label-text {
+  /* ★ 핵심: 인라인 요소를 박스 모델로 변경 ★ */
+  display: inline-block; 
+  
+  font-size: 16px;
+  font-weight: 700;
+  
+  /* 이제 마진이 정상적으로 적용됩니다 */
+  margin-left: 20px; 
+  
+  cursor: default;
+  color: #333;
+  vertical-align: middle; /* 아이콘과 높이가 안 맞을 때 사용 */
+}
+
+/* 4. 드롭다운 박스 */
+.category-dropdown-box {
+  position: absolute;
+  top: 100%;
+  left: 20px; /* 아이콘 위치 아래에 맞춤 */
+  width: 200px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 10px 0;
+}
+
+.category-item-row {
+  width: 100%;
+  padding: 12px 20px;
+  cursor: pointer;
+}
+
+.category-item-row:hover {
+  background-color: #f8f9fa;
+}

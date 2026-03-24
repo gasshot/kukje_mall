@@ -1,0 +1,10 @@
+node.js 설치확인
+
+
+
+npm이 실행되지 않는 경우
+
++ CategoryInfo : 보안 오류: (:) [], PSSecurityException + FullyQualifiedErrorId : UnauthorizedAccess
+->
+
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
