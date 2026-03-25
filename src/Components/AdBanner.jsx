@@ -11,14 +11,21 @@ const AdBanner = () => {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  // 1. 일시정지 상태 추가
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     if (adsData.length <= 1) return;
+    
+    // 2. 일시정지 상태가 true면 타이머를 설정하지 않음
+    if (isPaused) return;
+
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % adsData.length);
     }, 10000);
+
     return () => clearInterval(timer);
-  }, [adsData.length]);
+  }, [adsData.length, isPaused]); // isPaused가 바뀔 때마다 useEffect 재실행
 
   const handleAdClick = (ad) => {
     console.log(`[API 시뮬레이션] ID: ${ad.id}, 링크: ${ad.link}`);
@@ -27,11 +34,15 @@ const AdBanner = () => {
   if (!adsData || adsData.length === 0) return null;
 
   return (
-    <div className="ad-section-container">
+    <div 
+      className="ad-section-container"
+      // 3. 마우스 이벤트 핸들러 추가
+      onMouseEnter={() => setIsPaused(true)} 
+      onMouseLeave={() => setIsPaused(false)}
+    >
       <div 
         className="ad-track" 
         style={{ 
-          // 현재 인덱스 * (100 / 전체개수) 만큼 이동
           transform: `translateX(-${currentIndex * (100 / adsData.length)}%)`,
           width: `${adsData.length * 100}%` 
         }}
@@ -42,7 +53,7 @@ const AdBanner = () => {
             className="ad-slide-item" 
             style={{ 
               backgroundColor: ad.color,
-              width: `${100 / adsData.length}%` // 전체 트랙 내에서 정확히 n분의 1 차지
+              width: `${100 / adsData.length}%` 
             }}
             onClick={() => handleAdClick(ad)}
           >

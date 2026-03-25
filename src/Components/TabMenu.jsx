@@ -24,7 +24,7 @@ const TabMenu = () => {
       <div className="category-wrapper">
         <div className="category-trigger-btn">
           <span className="hamburger-icon" onClick={toggleCategory}>☰</span>
-          <span className="category-label-text">전체 카테고리</span>
+          <span className="category-label-text">카테고리</span>
         </div>
         
         {isCategoryVisible && (
