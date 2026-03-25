@@ -1,0 +1,62 @@
+.ad-section-container {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  position: relative; /* 인디케이터 배치를 위해 relative 필수 */
+  background-color: #eee;
+  margin-bottom: 20px;
+}
+
+.ad-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.ad-slide-item {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #fff;
+  user-select: none;
+}
+
+.ad-title {
+  font-size: 1.6rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* 인디케이터 스타일 */
+.ad-indicator-wrapper {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10; /* 광고보다 위에 위치 */
+}
+
+.ad-indicator-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.ad-indicator-btn:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.ad-indicator-btn.active {
+  background-color: #fff;
+  width: 30px; /* 활성화된 버튼은 길게 표시 */
+  border-radius: 6px;
+}
