@@ -1,61 +1,140 @@
 import React, { useState } from 'react';
+import './TabMenu.css'; // 경로만 딱 작성하세요.
 
 const TabMenu = () => {
   const [isCategoryVisible, setIsCategoryVisible] = useState(false);
-  const [activeCategory, setActiveCategory] = useState(null);
+  const [activeCategory, setActiveCategory] = useState(null); // 1단계: 대분류
+  const [activeSub, setActiveSub] = useState(null);           // 2단계: 중분류
 
-  // 1단계 카테고리와 그에 따른 2단계 세부 데이터
+  // 기존 데이터 구조를 유지하며 3단계를 위한 details 추가
   const categories = [
-    { id: 'fashion', name: '의류/잡화', sub: ['남성의류', '여성의류', '신발', '가방/지갑'] },
-    { id: 'beauty', name: '뷰티/화장품', sub: ['스킨케어', '메이크업', '향수', '바디/헤어'] },
-    { id: 'food', name: '식품/건강', sub: ['신선식품', '가공식품', '건강기능식품', '음료'] },
-    { id: 'digital', name: '가전/디지털', sub: ['노트북', '스마트폰', 'TV', '생활가전'] },
-    { id: 'living', name: '생활/가구', sub: ['침구', '거실가구', '주방용품', '욕실용품'] },
+    { 
+      id: 'fashion', 
+      name: '의류/잡화', 
+      sub: [
+        { name: '남성의류', details: ['티셔츠', '셔츠', '슬랙스', '청바지'] },
+        { name: '여성의류', details: ['원피스', '블라우스', '치마', '니트'] },
+        { name: '신발', details: ['운동화', '구두', '슬리퍼'] },
+        { name: '가방/지갑', details: ['백팩', '숄더백', '반지갑'] }
+      ] 
+    },
+    { 
+      id: 'beauty', 
+      name: '뷰티/화장품', 
+      sub: [
+        { name: '스킨케어', details: ['스킨/토너', '로션', '에센스'] },
+        { name: '메이크업', details: ['쿠션/팩트', '립스틱', '아이섀도우'] },
+        { name: '향수', details: ['여성향수', '남성향수', '디퓨저'] },
+        { name: '바디/헤어', details: ['샴푸', '트리트먼트', '바디워시'] }
+      ] 
+    },
+    { 
+      id: 'food', 
+      name: '식품/건강', 
+      sub: [
+        { name: '신선식품', details: ['과일', '채소', '정육', '계란'] },
+        { name: '가공식품', details: ['라면', '통조림', '즉석밥'] },
+        { name: '건강기능식품', details: ['비타민', '홍삼', '유산균'] },
+        { name: '음료', details: ['생수', '탄산음료', '커피'] }
+      ] 
+    },
+    { 
+      id: 'digital', 
+      name: '가전/디지털', 
+      sub: [
+        { name: '노트북', details: ['게이밍 노트북', '사무용 노트북', '맥북'] },
+        { name: '스마트폰', details: ['아이폰', '갤럭시', '폴더블폰'] },
+        { name: 'TV', details: ['OLED TV', 'QLED TV', '벽걸이형'] },
+        { name: '생활가전', details: ['청소기', '공기청정기', '가습기'] }
+      ] 
+    },
+    { 
+      id: 'living', 
+      name: '생활/가구', 
+      sub: [
+        { name: '침구', details: ['이불', '베개', '매트리스 커버'] },
+        { name: '거실가구', details: ['소파', '거실장', '사이드 테이블'] },
+        { name: '주방용품', details: ['냄비/팬', '식기세트', '수저세트'] },
+        { name: '욕실용품', details: ['수건', '욕실화', '디스펜서'] }
+      ] 
+    },
   ];
 
-  const toggleCategory = (e) => {
-    e.stopPropagation();
-    setIsCategoryVisible((prev) => !prev);
-    if (!isCategoryVisible) setActiveCategory(null); // 열 때 초기화
+  const handleMouseEnter = () => setIsCategoryVisible(true);
+  
+  const handleMouseLeave = () => {
+    setIsCategoryVisible(false);
+    setActiveCategory(null);
+    setActiveSub(null);
+  };
+
+  // 대분류 마우스 오버 시 중분류 초기화 로직
+  const handleCategoryHover = (cat) => {
+    setActiveCategory(cat);
+    setActiveSub(null); // 다른 대분류로 이동하면 이전 중분류 선택 해제
   };
 
   return (
     <nav className="tab-menu-container">
-      <div className="category-wrapper">
+      <div 
+        className="category-wrapper"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         <div className="category-trigger-btn">
-          <span className="hamburger-icon" onClick={toggleCategory}>☰</span>
+          <span className="hamburger-icon">☰</span>
           <span className="category-label-text">카테고리</span>
         </div>
         
         {isCategoryVisible && (
           <div className="category-dropdown-box">
-            {/* 왼쪽: 메인 카테고리 목록 */}
+            {/* 1단계: 대분류 (20%) */}
             <div className="main-category-list">
               {categories.map((cat) => (
                 <div 
                   key={cat.id} 
                   className={`category-item-row ${activeCategory?.id === cat.id ? 'active' : ''}`}
-                  onMouseEnter={() => setActiveCategory(cat)} // 마우스 올리면 세부 카테고리 변경
+                  onMouseEnter={() => handleCategoryHover(cat)}
                 >
-                  <span className="category-text">{cat.name}</span>
+                  <span className={`category-text ${activeCategory?.id === cat.id ? 'active' : ''}`}>{cat.name}</span>
                   <span className="arrow-icon">▶</span>
                 </div>
               ))}
             </div>
 
-            {/* 오른쪽: 세부 카테고리 목록 (마우스 올린 항목이 있을 때만 표시) */}
-            <div className="sub-category-detail">
+            {/* 2단계: 중분류 (20%) */}
+            <div className="mid-category-list">
               {activeCategory ? (
-                <>
-                  <h4 className="sub-title">{activeCategory.name} 세부 분류</h4>
-                  <div className="sub-grid">
-                    {activeCategory.sub.map((subItem, index) => (
-                      <div key={index} className="sub-item">{subItem}</div>
+                activeCategory.sub.map((subItem, index) => (
+                  <div 
+                    key={index} 
+                    className={`mid-item-row ${activeSub?.name === subItem.name ? 'active' : ''}`}
+                    onMouseEnter={() => setActiveSub(subItem)}
+                  >
+                    <span className={`mid-category-text ${activeSub?.name === subItem.name ? 'active' : ''}`}>{subItem.name}</span>
+                    <span className="arrow-icon small">▶</span>
+                  </div>
+                ))
+              ) : (
+                <div className="empty-msg-side">대분류를 선택하세요</div>
+              )}
+            </div>
+
+            {/* 3단계: 세세분류/내용 (60%) */}
+            <div className="detail-content-area">
+              {activeSub ? (
+                <div className="detail-container">
+                  <h4 className="detail-title">{activeSub.name} 상세 품목</h4>
+                  <div className="detail-grid">
+                    {activeSub.details.map((detail, index) => (
+                      <div key={index} className="detail-card">
+                        {detail}
+                      </div>
                     ))}
                   </div>
-                </>
+                </div>
               ) : (
-                <div className="empty-msg">카테고리에 마우스를 올려주세요.</div>
+                <div className="empty-msg-main">중분류에 마우스를 올려 상세 품목을 확인하세요.</div>
               )}
             </div>
           </div>

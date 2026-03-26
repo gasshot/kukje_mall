@@ -38,12 +38,20 @@ function KukjeHeader({ onSearch, isLoggedIn }) {
     }
   };
 
+    // 로고 클릭 핸들러
+  const handleLogoClick = () => {
+    alert('메인화면으로 돌아가는 API');
+    navigate('/');
+  };
+
   return (
     <header className="k-header-wrapper">
       <div className="k-header-container">
         
         {/* 1. 로고 영역 - 클릭 시 홈으로 이동 기능 추가 */}
-        <div className="k-logo-area" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
+        <div className='k-logo-img'><img src="" alt="" /></div>
+
+        <div className="k-logo-area" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
           <h1 className="k-logo-text">Kukjemall</h1>
         </div>
 

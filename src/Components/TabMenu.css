@@ -1,52 +1,51 @@
-/* 1. 메뉴 바 전체 */
+/* 메뉴 바 전체 */
 .tab-menu-container {
-  display: flex !important;
-  justify-content: flex-start !important;
+  display: flex;
+  justify-content: flex-start;
   width: 100%;
   background-color: #eee;
   height: 60px;
-  position: relative; /* ★ 드롭다운의 너비 기준점이 됨 */
+  position: relative;
 }
 
 .category-wrapper {
   display: flex;
   align-items: center;
-  background-color: #007bff;
+  cursor: pointer;
+  background-color: var(--main-logo-color);
   height: 100%;
-  width: 20%;
+  width: 15%;
 }
 
 .hamburger-icon {
   font-size: 24px;
-  cursor: pointer !important;
   padding: 5px 10px;
   user-select: none;
-  color : white;
+  color: white;
 }
-.category-label-text{
+
+.category-label-text {
   font-weight: bold;
-  color : white;
-
+  color: white;
 }
 
-/* 2. 드롭다운 박스: 위 컨테이너와 동일한 전체 너비 설정 ★ */
+/* 드롭다운 */
 .category-dropdown-box {
   position: absolute;
-  top: 100%; /* 메뉴 바 바로 아래 */
-  left: 0;   /* 왼쪽 끝 정렬 */
-  width: 100%; /* ★ 부모(.tab-menu-container)의 전체 너비를 가짐 */
-  height: 400px; /* 고정 높이 설정 */
-  background-color: #ffffff;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 400px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
   z-index: 9999;
-  display: flex; /* 2단 구성을 위해 flex 사용 */
+  display: flex;
 }
 
-/* 3. 왼쪽 메인 카테고리 (25% 폭) */
+/* 1단계 */
 .main-category-list {
   width: 20%;
   border-right: 1px solid #eee;
-  background-color: #007bff;
+  background-color: var(--bg);
   overflow-y: auto;
 }
 
@@ -57,69 +56,96 @@
   padding: 15px 25px;
   cursor: pointer;
   font-weight: bold;
-  color: white;
 }
 
-.category-item-row.active, 
-.category-item-row:hover {
+.category-item-row:hover,
+.category-item-row.active {
   background-color: #f8f9fa;
   color: #007bff;
 }
 
-/* 평소에는 숨김 */
 .category-item-row .arrow-icon {
-  display: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
-/* 부모(row)에 마우스가 올라갔을 때만 화살표 노출 */
 .category-item-row:hover .arrow-icon,
 .category-item-row.active .arrow-icon {
-  display: inline-block;
+  visibility: visible;
+  opacity: 1;
 }
 
-.category-text 
-{ 
-  font-size: 15px; 
-  font-weight: bold; 
+.category-text {
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--text);
 }
 
-/* 4. 오른쪽 세부 카테고리 (나머지 폭 전체) */
-.sub-category-detail {
-  flex: 1; /* 나머지 공간 모두 차지 */
-  padding: 30px;
-  background-color: #fcfcfc;
+.category-text.active {
+  text-decoration: underline;
+  color: var(--main-logo-color);
 }
 
-.sub-title {
-  font-size: 18px;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #007bff;
-  display: inline-block;
-  padding-bottom: 5px;
+.mid-category-list {
+  width: 20%;
+  border-right: 1px solid #eee;
+  background: white;
 }
 
-.sub-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4열 격자 구조 */
-  gap: 15px;
-}
-
-.sub-item {
-  padding: 10px;
-  font-size: 14px;
-  color: #666;
+.mid-item-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 20px;
   cursor: pointer;
 }
 
-.sub-item:hover {
-  text-decoration: underline;
-  color: #333;
+.mid-item-row:hover,
+.mid-item-row.active {
+  background: #f5f5f5;
 }
 
-.empty-msg {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  color: #bbb;
+.mid-item-row .arrow-icon {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.mid-item-row:hover .arrow-icon,
+.mid-item-row.active .arrow-icon {
+  visibility: visible;
+  opacity: 1;
+}
+
+.mid-category-text {
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--text);
+}
+
+.mid-category-text.active {
+  text-decoration: underline;
+  color: var(--main-logo-color);
+}
+
+.detail-content-area {
+  width: 60%;
+  padding: 20px;
+  background: #fff;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.detail-card {
+  padding: 10px;
+  border: 1px solid #eee;
+  cursor: pointer;
+}
+
+.detail-card:hover {
+  background: #f8f8f8;
 }

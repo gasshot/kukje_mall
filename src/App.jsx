@@ -6,7 +6,6 @@ import TabMenu from './Components/TabMenu';
 import Login from './Components/Login';
 import Home from './Components/Home';
 import AdBanner from './Components/AdBanner';
-import './App.css';          // 먼저 로드 (기본 스타일)
 import './Components/TabMenu.css';       // 나중에 로드 (우선순위 높음)
 
 // 임시 컴포넌트 (프로필/주문내역 페이지 확인용)
