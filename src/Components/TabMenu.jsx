@@ -8,9 +8,7 @@ const TabMenu = () => {
 
   const categories = [
     {
-      id: 'fashion',
-      name: '의류/잡화',
-      sub: [
+      id: 'fashion', name: '의류/잡화', sub: [
         { name: '남성의류', details: ['티셔츠', '셔츠', '슬랙스', '청바지'] },
         { name: '여성의류', details: ['원피스', '블라우스', '치마', '니트'] },
         { name: '신발', details: ['운동화', '구두', '슬리퍼'] },
@@ -18,9 +16,7 @@ const TabMenu = () => {
       ]
     },
     {
-      id: 'beauty',
-      name: '뷰티/화장품',
-      sub: [
+      id: 'beauty', name: '뷰티/화장품', sub: [
         { name: '스킨케어', details: ['스킨/토너', '로션', '에센스'] },
         { name: '메이크업', details: ['쿠션/팩트', '립스틱', '아이섀도우'] },
         { name: '향수', details: ['여성향수', '남성향수', '디퓨저'] },
@@ -28,9 +24,7 @@ const TabMenu = () => {
       ]
     },
     {
-      id: 'food',
-      name: '식품/건강',
-      sub: [
+      id: 'food', name: '식품/건강', sub: [
         { name: '신선식품', details: ['과일', '채소', '정육', '계란'] },
         { name: '가공식품', details: ['라면', '통조림', '즉석밥'] },
         { name: '건강기능식품', details: ['비타민', '홍삼', '유산균'] },
@@ -38,9 +32,7 @@ const TabMenu = () => {
       ]
     },
     {
-      id: 'digital',
-      name: '가전/디지털',
-      sub: [
+      id: 'digital', name: '가전/디지털', sub: [
         { name: '노트북', details: ['게이밍 노트북', '사무용 노트북', '맥북'] },
         { name: '스마트폰', details: ['아이폰', '갤럭시', '폴더블폰'] },
         { name: 'TV', details: ['OLED TV', 'QLED TV', '벽걸이형'] },
@@ -48,9 +40,7 @@ const TabMenu = () => {
       ]
     },
     {
-      id: 'living',
-      name: '생활/가구',
-      sub: [
+      id: 'living', name: '생활/가구', sub: [
         { name: '침구', details: ['이불', '베개', '매트리스 커버'] },
         { name: '거실가구', details: ['소파', '거실장', '사이드 테이블'] },
         { name: '주방용품', details: ['냄비/팬', '식기세트', '수저세트'] },
@@ -72,20 +62,23 @@ const TabMenu = () => {
   };
 
   return (
-    <nav className="tab-menu-container">
-      {/* 1. container를 최상위로 올려서 '반응 범위'와 '렌더링 폭'을 제한 */}
-      <div
-        className="container category-relative-root"
+    <div className="container category-relative-root">
+      {/* 최소 수정 포인트: 
+         onMouseEnter와 onMouseLeave를 버튼 내부가 아닌, 
+         버튼과 드롭다운을 모두 포함하는 <nav> 태그로 이동 
+      */}
+      <nav 
+        className="tab-menu-nav"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {/* 2. 버튼 영역: 이제 container 안에 있으므로 자동으로 max-width 내 좌측 정렬 */}
+        {/* 2. 카테고리 트리거 버튼 */}
         <div className="category-trigger-btn">
           <span className="hamburger-icon">☰</span>
           <span className="category-label-text">전체 카테고리</span>
         </div>
 
-        {/* 3. 드롭다운: 부모가 container이므로 width: 100%를 줘도 max-width를 넘지 않음 */}
+        {/* 3. 드롭다운 */}
         {isCategoryVisible && (
           <div className="category-dropdown-box">
             <div className="dropdown-inner">
@@ -98,8 +91,8 @@ const TabMenu = () => {
                     className={`category-item-row ${activeCategory?.id === cat.id ? 'active' : ''}`}
                     onMouseEnter={() => handleCategoryHover(cat)}
                   >
-                    <span className="category-text">{cat.name}</span>
-                    <span className="arrow-icon">▶</span>
+                    <span className={`category-text ${activeCategory?.id === cat.id ? 'active' : ''}`}>{cat.name}</span>
+                    <span className={`arrow-icon ${activeCategory?.id === cat.id ? 'active' : ''}`}>▶</span>
                   </div>
                 ))}
               </div>
@@ -113,8 +106,8 @@ const TabMenu = () => {
                       className={`mid-item-row ${activeSub?.name === subItem.name ? 'active' : ''}`}
                       onMouseEnter={() => setActiveSub(subItem)}
                     >
-                      <span className="mid-category-text">{subItem.name}</span>
-                      <span className="arrow-icon small">▶</span>
+                      <span className={`mid-category-text ${activeSub?.name === subItem.name ? 'active' : ''}`}>{subItem.name}</span>
+                      <span className={`arrow-icon small ${activeSub?.name === subItem.name ? 'active' : ''}`}>▶</span>
                     </div>
                   ))
                 ) : (
@@ -137,12 +130,11 @@ const TabMenu = () => {
                   <div className="empty-msg">중분류에 마우스를 올려 확인하세요.</div>
                 )}
               </div>
-
             </div>
           </div>
         )}
-      </div>
-    </nav>
+      </nav>
+    </div>
   );
 };
 

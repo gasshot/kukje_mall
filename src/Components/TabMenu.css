@@ -1,28 +1,31 @@
-:root {
-  --category-width: 240px; 
-  --nav-height: 60px;
-}
-
-/* 메뉴 바 배경은 화면 끝까지 가도 됨 (색상만 담당) */
-.tab-menu-container {
+/* 탭 메뉴 바 전체 배경 (배경만 화면 끝까지) */
+.tab-menu-bg-wrapper {
   width: 100%;
   background-color: #f8f9fa;
-  height: var(--nav-height);
   border-bottom: 1px solid var(--border);
 }
 
-/* [핵심] container가 기준점이 되어 max-width를 강제함 */
+/* [핵심] container가 기준점이 되어 1200px을 강제함 */
 .category-relative-root {
-  position: relative; /* 드롭다운 absolute의 기준 */
-  height: 100%;
-  padding: 0 !important; /* 내부 요소와 시작 선을 맞추기 위해 */
+  position: relative;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  height: var(--nav-height);
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
 }
 
-/* 버튼: 이제 container의 왼쪽 끝에 딱 붙음 */
+.tab-menu-nav {
+  width: var(--category-width);
+  height: 100%;
+}
+
+/* 버튼: container의 왼쪽 끝에 고정 */
 .category-trigger-btn {
   display: flex;
   align-items: center;
-  width: var(--category-width); 
+  width: 100%;
   height: 100%;
   padding: 0 24px;
   background-color: var(--main-logo-color);
@@ -33,29 +36,28 @@
 }
 
 .hamburger-icon {
-  margin-right: 10px; /* vw 대신 px 권장 (일관성) */
+  margin-right: 10px;
 }
 
-/* [핵심] 드롭다운: 이제 width 100%는 화면 전체가 아니라 .container의 폭임 */
+/* [핵심] 드롭다운: width 100%는 이제 .container(1200px)의 폭임 */
 .category-dropdown-box {
   position: absolute;
   top: var(--nav-height);
   left: 0;
-  width: 100%; /* .container의 max-width를 절대 넘지 않음 */
+  width: 100%;
   z-index: 9999;
-  margin-top: -1px; /* 틈새 제거 */
 }
 
 .dropdown-inner {
   display: flex;
   height: 500px;
   background-color: #fff;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); */
   border: 1px solid var(--border);
   box-sizing: border-box;
 }
 
-/* 1단계 대분류 너비는 버튼 너비와 일치 */
+/* 1단계 대분류 */
 .main-category-list {
   width: var(--category-width);
   background-color: #fdfdfd;
@@ -63,25 +65,74 @@
   flex-shrink: 0;
 }
 
-/* 2단계: 중분류 리스트 */
+.category-text {
+  font-weight: bold;
+
+}
+
+.category-text.active {
+  text-decoration: underline;
+
+}
+
+.arrow-icon {
+  color: var(--main-logo-color);
+  visibility: hidden;
+  /* 일단 숨김 */
+}
+
+/* arrow-icon 엘리먼트 자체에 active 클래스가 붙은 경우 */
+.arrow-icon.active {
+  visibility: visible;
+  /* 보임 */
+}
+
+/* 2단계 중분류 */
 .mid-category-list {
-  width: 200px; /* 중분류는 적절한 고정폭 */
+  width: 200px;
   background-color: var(--bg);
   border-right: 1px solid var(--border);
   flex-shrink: 0;
   overflow-y: auto;
 }
 
-/* 3단계: 상세 그리드 */
+.mid-category-text {
+  font-weight: bold;
+}
+
+.mid-category-text.active {
+  text-decoration: underline;
+}
+
+
+/* --- 화살표 아이콘 스타일 --- */
+.arrow-icon.small {
+  color: var(--main-logo-color);
+  font-size: 11px;
+  /* 평소에는 공간은 차지하되 보이지 않게 설정 */
+  visibility: hidden;
+  transition: transform 0.2s, visibility 0.2s;
+}
+
+/* 화살표에 active 클래스가 직접 붙었을 때 */
+.arrow-icon.small.active {
+  visibility: visible;
+  /* 보이게 처리 */
+  transform: translateX(4px);
+  /* 살짝 옆으로 밀어주는 효과 (선택사항) */
+}
+
+/* 3단계 상세 영역 */
 .detail-content-area {
-  flex: 1; /* 남은 모든 공간 */
+  flex: 1;
   padding: 40px;
   background-color: var(--bg);
   overflow-y: auto;
 }
 
-/* --- 공통 아이템 스타일 --- */
-.category-item-row, .mid-item-row {
+/* 공통 아이템 스타일 */
+.category-item-row,
+.mid-item-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -91,20 +142,11 @@
   color: var(--text);
 }
 
-.category-item-row.active, .mid-item-row.active {
+.category-item-row.active,
+.mid-item-row.active {
   background-color: var(--accent-bg);
   color: var(--main-logo-color);
   font-weight: bold;
-}
-
-.arrow-icon {
-  font-size: 11px;
-  opacity: 0.3;
-}
-
-.active .arrow-icon {
-  opacity: 1;
-  transform: translateX(4px);
 }
 
 /* 상세 그리드 디자인 */
@@ -131,7 +173,7 @@
 
 .detail-card:hover {
   border-color: var(--main-logo-color);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .empty-msg {

@@ -1,106 +1,84 @@
-/* 푸터 전체 배경 (화면 끝까지) */
+/* 1. 푸터 전체 배경 및 상단 테두리 */
 .k-footer-wrapper {
   width: 100%;
-  background-color: #f5f5f5;
-  border-top: 1px solid #e0e0e0;
-  padding: 60px 0; /* 상하 여백 확보 */
-  margin-top: auto; /* 페이지 콘텐츠가 적어도 푸터를 하단에 고정 */
+  background-color: var(--footer-bg);
+  border-top: 1px solid var(--border);
+  padding: 40px 0;
+  margin-top: auto; /* 콘텐츠가 적어도 푸터를 바닥에 고정 */
 }
 
-/* 내부 레이아웃 (중앙 정렬) */
+/* 2. 내부 컨테이너 (모바일 우선: 세로 배치) */
 .k-footer-container {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 0 !important; /* container의 기본 패딩이 레이아웃을 방해하지 않게 조정 */
-}
-
-/* --- 개별 섹션 스타일 --- */
-.k-footer-section {
+  flex-direction: column; /* 기본은 세로 쌓기 */
+  gap: 32px; /* 섹션 간 간격 */
   text-align: left;
 }
 
-/* 회사 정보 영역 */
-.company-info {
-  /* 고정폭보다는 유연하게 flex-basis 사용 권장 */
-  flex: 0 0 500px; 
-  margin-right: 80px;
+/* 3. 개별 섹션 공통 스타일 */
+.k-footer-section h2, 
+.k-footer-section h3 {
+  margin-bottom: 16px;
+  color: var(--text-h);
 }
 
-/* 수강 정보 영역 */
-.course-info {
-  flex: 1; /* 남은 공간 사용 */
-}
-
-/* --- 상세 텍스트 스타일 --- */
 .k-footer-logo {
-  font-size: 26px;
-  font-weight: 800;
-  color: #333;
-  margin-bottom: 20px;
-  letter-spacing: -0.5px;
-}
-
-.k-info-text p {
-  font-size: 14px;
-  color: #666;
-  margin: 6px 0;
-  line-height: 1.6;
-}
-
-.k-info-text strong {
-  color: #444;
+  font-size: 1.4rem;
 }
 
 .k-course-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #444;
-  margin-bottom: 20px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #4983ff; /* 포인트 컬러인 블루 적용 */
+  font-size: 1.1rem;
+  border-bottom: 2px solid var(--main-logo-color);
   display: inline-block;
+  padding-bottom: 4px;
+}
+
+/* 4. 텍스트 정보 스타일 */
+.k-info-text p, 
+.k-course-list li {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.k-info-text strong {
+  color: var(--text-h);
 }
 
 .k-course-list {
   list-style: none;
-  padding: 0;
-  margin: 0;
+  padding-left: 0;
 }
 
-.k-course-list li {
-  font-size: 14px;
-  color: #777;
-  margin-bottom: 12px;
-  position: relative;
-  padding-left: 15px;
-}
-
-/* 리스트 앞에 작은 점 추가 (디테일) */
-.k-course-list li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: #4983ff;
-  font-weight: bold;
-}
-
+/* 카피라이트 강조 */
 .k-copyright {
-  margin-top: 40px !important;
-  font-size: 12px !important;
-  color: #999 !important;
-  display: block;
+  margin-top: 20px;
+  font-size: 0.8rem !important;
+  color: #888 !important;
 }
 
-/* 반응형: 화면이 작아지면 위아래로 배치 */
-@media (max-width: 768px) {
+/* -------------------------------------------
+   5. 데스크톱 대응 (768px 이상)
+------------------------------------------- */
+@media (min-width: 768px) {
   .k-footer-container {
-    flex-direction: column;
-    gap: 40px;
+    flex-direction: row; /* 가로로 배치 */
+    justify-content: space-between; /* 양쪽 끝으로 밀기 */
+    align-items: flex-start;
   }
+
   .company-info {
-    flex: none;
-    width: 100%;
-    margin-right: 0;
+    flex: 2; /* 회사 정보 영역을 더 넓게 */
+  }
+
+  .course-info {
+    flex: 1; /* 수강 안내 영역은 적당히 */
+    text-align: right; /* 데스크톱에선 우측 정렬이 세련되어 보임 */
+  }
+
+  .k-course-list {
+    display: inline-block;
+    text-align: left; /* 리스트 내용은 다시 왼쪽 정렬 */
   }
 }

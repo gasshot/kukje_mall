@@ -68,16 +68,6 @@ function KukjeHeader({ onSearch, isLoggedIn }) {
             <BsSearch size="1.4em" />
           </button>
         </form>
-
-        {/* 3. 오른쪽 아이콘/쿠폰 영역 */}
-        <div className="k-right-area">
-          <div className="k-ad-coupon">
-            <div className="k-ad-icon-wrapper">
-              <span className="k-ad-icon">K</span>
-              <span className="k-ad-text-mini">20,000</span>
-            </div>
-          </div>
-
           {/* 유저/카트 아이콘 메뉴 */}
           <div className="k-icon-menu">
             {/* 유저 프로필 버튼 */}
@@ -88,16 +78,7 @@ function KukjeHeader({ onSearch, isLoggedIn }) {
             >
               <BiUser size="1.8em" />
             </button>
-
-            {/* 주문 내역 버튼 */}
-            <button 
-              className="k-icon-item" 
-              onClick={handleOrdersClick} 
-              aria-label="Orders"
-            >
-              <PiFoldersDuotone size="1.8em" />
-            </button>
-
+            
             {/* 장바구니 버튼 (필요 시 /cart 페이지 이동) */}
             <button 
               className="k-icon-item" 
@@ -108,8 +89,6 @@ function KukjeHeader({ onSearch, isLoggedIn }) {
             </button>
           </div>
         </div>
-        
-      </div>
     </header>
   );
 }

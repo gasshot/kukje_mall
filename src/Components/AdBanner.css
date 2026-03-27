@@ -1,24 +1,36 @@
-/* 컨테이너 바깥 여백 조정 */
-.ad-wrapper {
-  margin-bottom: 40px;
-  padding: 0; /* 컨테이너 기본 패딩이 싫다면 여기서 조정 */
+:root {
+  /* 일관성을 위한 공통 변수 (필요시 호출) */
+  --ad-height: 450px;
+  --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
+/* [핵심] 최상위 컨테이너: 외부 여백 및 중앙 정렬 강제 */
+.container.ad-wrapper {
+  max-width: var(--max-width); /* 공통 규격 */
+  margin: 0 auto 40px auto; /* 상단/좌우/하단 여백 */
+  padding: 0 !important; /* 내부 여백 제거하여 배너 꽉 차게 */
+  overflow: hidden; /* 자식 요소인 track이 삐져나오지 않게 가둠 */
+  position: relative;
+}
+
+/* 배너 내부 섹션 */
 .ad-section-container {
   width: 100%;
-  height: 400px;
-  overflow: hidden;
+  height: var(--ad-height);
   position: relative;
   background-color: #eee;
 }
 
+/* 슬라이드 트랙: JS에서 계산된 width와 transform이 적용됨 */
 .ad-track {
   display: flex;
   height: 100%;
-  /* 부드러운 이동을 위한 트랜지션 */
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  /* 분석 내용 반영: 부드러운 이동을 위한 베지어 곡선 */
+  transition: transform 0.6s var(--transition-smooth);
+  will-change: transform; /* 성능 최적화 */
 }
 
+/* 개별 슬라이드 아이템 */
 .ad-slide-item {
   height: 100%;
   display: flex;
@@ -28,32 +40,35 @@
   cursor: pointer;
   color: #fff;
   user-select: none;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s ease;
+  box-sizing: border-box; /* 패딩이나 보더로 인해 너비가 틀어지는 것 방지 */
 }
 
 .ad-slide-item:hover {
-  opacity: 0.9; /* 클릭 유도 효과 */
+  opacity: 0.9; /* 클릭 유도 효과 반영 */
 }
 
 .ad-title {
-  font-size: 2rem;
+  font-size: 2.5rem; /* 시인성을 위해 소폭 상향 */
   font-weight: 700;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  margin: 0;
 }
 
-/* 인디케이터 스타일 */
+/* 인디케이터 스타일 (시인성 보강 버전) */
 .ad-indicator-wrapper {
   position: absolute;
-  bottom: 20px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 8px;
   z-index: 10;
-  background: rgba(0, 0, 0, 0.1); /* 인디케이터 시인성 확보 */
-  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.2); /* 배경 농도 소폭 상향 */
+  padding: 8px 16px;
   border-radius: 20px;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(6px); /* 블러 효과 강화 */
+  pointer-events: auto; /* 클릭 가능하도록 명시 */
 }
 
 .ad-indicator-btn {
@@ -68,11 +83,11 @@
 }
 
 .ad-indicator-btn:hover {
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .ad-indicator-btn.active {
   background-color: #fff;
-  width: 24px; /* 활성화된 버튼은 길게 표시 */
+  width: 24px; /* 활성화 시 바 형태 반영 */
   border-radius: 4px;
 }

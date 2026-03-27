@@ -18,7 +18,7 @@ const AdBanner = () => {
 
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % adsData.length);
-    }, 5000); // 10초는 너무 길어서 5초로 조정했습니다.
+    }, 5000); 
 
     return () => clearInterval(timer);
   }, [adsData.length, isPaused]);
@@ -30,13 +30,16 @@ const AdBanner = () => {
   if (!adsData || adsData.length === 0) return null;
 
   return (
-    /* 배너도 메인 컨텐츠 폭에 맞추기 위해 container 클래스 적용 */
+    /* 1. 최상위 요소에 container를 배치하여 배너 전체 폭을 제한하고 중앙 정렬 */
     <div className="container ad-wrapper">
+      
+      {/* 2. 실제 배너 섹션: 마우스 이벤트를 여기서 처리 */}
       <div 
         className="ad-section-container"
         onMouseEnter={() => setIsPaused(true)} 
         onMouseLeave={() => setIsPaused(false)}
       >
+        {/* 3. 슬라이드 트랙: transform을 통해 배너가 이동하는 효과 */}
         <div 
           className="ad-track" 
           style={{ 
@@ -59,7 +62,7 @@ const AdBanner = () => {
           ))}
         </div>
 
-        {/* 인디케이터 */}
+        {/* 4. 인디케이터: 현재 위치 표시 및 이동 버튼 */}
         <div className="ad-indicator-wrapper">
           {adsData.map((_, index) => (
             <button
