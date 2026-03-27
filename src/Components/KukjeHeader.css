@@ -15,7 +15,6 @@
   width: 100%;
   background-color: #fff;
   border-bottom: 1px solid #eaeaea;
-  padding: 1.5vh 3vw 1.5vh 1.5vw; /* 화면 높이(vh)와 너비(vw)에 비례한 여백 */
   box-sizing: border-box;
 }
 
@@ -31,9 +30,9 @@
 /* --- 1. 로고 영역 (텍스트 로고 스타일) --- */
 .k-logo-area {
   flex-shrink: 0; /* 공간이 부족해도 줄어들지 않음 */
-  width: auto;
-  max-width: 16vw; /* 화면 너비에 따라 최대 크기 제한 */
-  padding-right: 2vw; 
+  width: 20%;
+  /* max-width: 16vw; 화면 너비에 따라 최대 크기 제한 */
+  /* padding-right: 2vw;  */
   /* Viewport Width 숫자 100을 기준으로 전체 너비를 계산(2vw = 2%)*/ 
 }
 
@@ -41,7 +40,7 @@
   font-weight: bold;
   color: var(--k-main-color);
   margin: 0;
-  letter-spacing: -0.5px; /* 글자 간격 살짝 좁힘 */
+  letter-spacing: -0.5px;
   /* 필요하다면 여기에 특정 폰트를 적용하세요 (예: font-family: 'Poppins', sans-serif;) */
 }
 
@@ -49,7 +48,7 @@
 .k-search-form {
   display: flex;
   /* flex: 1 대신 고정 수치 사용 */
-  width: 500px;      /* 검색창 너비를 500px로 딱 고정 */
+  width: 50%;      /* 검색창 너비를 500px로 딱 고정 */
   flex-shrink: 0;    /* 창이 작아져도 검색창 크기는 유지 */
   
   /* 마진을 px로 주어 로고와의 간격 유지 */
@@ -155,6 +154,7 @@
   display: flex;
   align-items: center;
   gap: 1.5vw;
+  padding-right: 2vw;
 }
 
 .k-icon-item {

@@ -1,15 +1,21 @@
+/* 컨테이너 바깥 여백 조정 */
+.ad-wrapper {
+  margin-bottom: 40px;
+  padding: 0; /* 컨테이너 기본 패딩이 싫다면 여기서 조정 */
+}
+
 .ad-section-container {
   width: 100%;
   height: 400px;
   overflow: hidden;
-  position: relative; /* 인디케이터 배치를 위해 relative 필수 */
+  position: relative;
   background-color: #eee;
-  margin-bottom: 20px;
 }
 
 .ad-track {
   display: flex;
   height: 100%;
+  /* 부드러운 이동을 위한 트랜지션 */
   transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -22,41 +28,51 @@
   cursor: pointer;
   color: #fff;
   user-select: none;
+  transition: opacity 0.3s;
+}
+
+.ad-slide-item:hover {
+  opacity: 0.9; /* 클릭 유도 효과 */
 }
 
 .ad-title {
-  font-size: 1.6rem;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  font-size: 2rem;
+  font-weight: 700;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.15);
 }
 
 /* 인디케이터 스타일 */
 .ad-indicator-wrapper {
   position: absolute;
-  bottom: 15px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 12px;
-  z-index: 10; /* 광고보다 위에 위치 */
+  gap: 8px;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.1); /* 인디케이터 시인성 확보 */
+  padding: 8px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
 }
 
 .ad-indicator-btn {
-  width: 12px;
-  height: 12px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   border: none;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.4);
   cursor: pointer;
   transition: all 0.3s ease;
   padding: 0;
 }
 
 .ad-indicator-btn:hover {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 .ad-indicator-btn.active {
   background-color: #fff;
-  width: 30px; /* 활성화된 버튼은 길게 표시 */
-  border-radius: 6px;
+  width: 24px; /* 활성화된 버튼은 길게 표시 */
+  border-radius: 4px;
 }

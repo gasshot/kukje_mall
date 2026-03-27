@@ -1,151 +1,143 @@
-/* 메뉴 바 전체 */
-.tab-menu-container {
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  background-color: #eee;
-  height: 60px;
-  position: relative;
+:root {
+  --category-width: 240px; 
+  --nav-height: 60px;
 }
 
-.category-wrapper {
+/* 메뉴 바 배경은 화면 끝까지 가도 됨 (색상만 담당) */
+.tab-menu-container {
+  width: 100%;
+  background-color: #f8f9fa;
+  height: var(--nav-height);
+  border-bottom: 1px solid var(--border);
+}
+
+/* [핵심] container가 기준점이 되어 max-width를 강제함 */
+.category-relative-root {
+  position: relative; /* 드롭다운 absolute의 기준 */
+  height: 100%;
+  padding: 0 !important; /* 내부 요소와 시작 선을 맞추기 위해 */
+}
+
+/* 버튼: 이제 container의 왼쪽 끝에 딱 붙음 */
+.category-trigger-btn {
   display: flex;
   align-items: center;
-  cursor: pointer;
-  background-color: var(--main-logo-color);
+  width: var(--category-width); 
   height: 100%;
-  width: 15%;
+  padding: 0 24px;
+  background-color: var(--main-logo-color);
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  box-sizing: border-box;
 }
 
 .hamburger-icon {
-  font-size: 24px;
-  padding: 5px 10px;
-  user-select: none;
-  color: white;
+  margin-right: 10px; /* vw 대신 px 권장 (일관성) */
 }
 
-.category-label-text {
-  font-weight: bold;
-  color: white;
-}
-
-/* 드롭다운 */
+/* [핵심] 드롭다운: 이제 width 100%는 화면 전체가 아니라 .container의 폭임 */
 .category-dropdown-box {
   position: absolute;
-  top: 100%;
+  top: var(--nav-height);
   left: 0;
-  width: 100%;
-  height: 400px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  width: 100%; /* .container의 max-width를 절대 넘지 않음 */
   z-index: 9999;
-  display: flex;
+  margin-top: -1px; /* 틈새 제거 */
 }
 
-/* 1단계 */
+.dropdown-inner {
+  display: flex;
+  height: 500px;
+  background-color: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+}
+
+/* 1단계 대분류 너비는 버튼 너비와 일치 */
 .main-category-list {
-  width: 20%;
-  border-right: 1px solid #eee;
+  width: var(--category-width);
+  background-color: #fdfdfd;
+  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+/* 2단계: 중분류 리스트 */
+.mid-category-list {
+  width: 200px; /* 중분류는 적절한 고정폭 */
+  background-color: var(--bg);
+  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+/* 3단계: 상세 그리드 */
+.detail-content-area {
+  flex: 1; /* 남은 모든 공간 */
+  padding: 40px;
   background-color: var(--bg);
   overflow-y: auto;
 }
 
-.category-item-row {
+/* --- 공통 아이템 스타일 --- */
+.category-item-row, .mid-item-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 25px;
+  padding: 16px 24px;
   cursor: pointer;
-  font-weight: bold;
-}
-
-.category-item-row:hover,
-.category-item-row.active {
-  background-color: #f8f9fa;
-  color: #007bff;
-}
-
-.category-item-row .arrow-icon {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.category-item-row:hover .arrow-icon,
-.category-item-row.active .arrow-icon {
-  visibility: visible;
-  opacity: 1;
-}
-
-.category-text {
-  font-size: 15px;
-  font-weight: bold;
+  transition: all 0.2s;
   color: var(--text);
 }
 
-.category-text.active {
-  text-decoration: underline;
+.category-item-row.active, .mid-item-row.active {
+  background-color: var(--accent-bg);
   color: var(--main-logo-color);
-}
-
-.mid-category-list {
-  width: 20%;
-  border-right: 1px solid #eee;
-  background: white;
-}
-
-.mid-item-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 20px;
-  cursor: pointer;
-}
-
-.mid-item-row:hover,
-.mid-item-row.active {
-  background: #f5f5f5;
-}
-
-.mid-item-row .arrow-icon {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.mid-item-row:hover .arrow-icon,
-.mid-item-row.active .arrow-icon {
-  visibility: visible;
-  opacity: 1;
-}
-
-.mid-category-text {
-  font-size: 15px;
   font-weight: bold;
-  color: var(--text);
 }
 
-.mid-category-text.active {
-  text-decoration: underline;
-  color: var(--main-logo-color);
+.arrow-icon {
+  font-size: 11px;
+  opacity: 0.3;
 }
 
-.detail-content-area {
-  width: 60%;
-  padding: 20px;
-  background: #fff;
+.active .arrow-icon {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+/* 상세 그리드 디자인 */
+.detail-title {
+  font-size: 22px;
+  margin-bottom: 25px;
+  color: var(--text-h);
 }
 
 .detail-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 15px;
 }
 
 .detail-card {
-  padding: 10px;
-  border: 1px solid #eee;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-align: center;
+  background: white;
   cursor: pointer;
 }
 
 .detail-card:hover {
-  background: #f8f8f8;
+  border-color: var(--main-logo-color);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.empty-msg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #bbb;
 }

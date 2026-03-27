@@ -18,7 +18,7 @@
   --mono: ui-monospace, Consolas, monospace;
 
   /* 레이아웃 변수 추가 */
-  --max-width: 1280px; /* 1126px보다 범용적인 데스크탑 사이즈 */
+  --max-width: 1440px; /* 1126px보다 범용적인 데스크탑 사이즈 */
   
   /* 기본 설정 */
   font-family: var(--sans);
@@ -61,12 +61,17 @@ body {
 
 #root {
   width: 100%;                  /* 기본적으로 꽉 채움 */
-  max-width: var(--max-width);  /* 설정한 최대 너비까지만 커짐 */
   margin: 0 auto;
   text-align: center;
   min-height: 100vh;            /* 100svh 대응 (브라우저 호환성) */
   display: flex;
   flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
   box-sizing: border-box;
 }
 

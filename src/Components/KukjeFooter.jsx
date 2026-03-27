@@ -1,9 +1,11 @@
+import React from 'react';
 import './KukjeFooter.css';
 
 function KukjeFooter() {
   return (
     <footer className="k-footer-wrapper">
-      <div className="k-footer-container">
+      {/* 핵심: 공통 container 클래스를 추가하여 본문 폭과 일치시킴 */}
+      <div className="container k-footer-container">
         
         {/* 왼쪽: 회사 정보 섹션 */}
         <div className="k-footer-section company-info">
