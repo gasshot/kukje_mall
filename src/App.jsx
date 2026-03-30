@@ -1,26 +1,23 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import KukjeHeader from './Components/KukjeHeader';
 import KukjeFooter from './Components/KukjeFooter';
 import TabMenu from './Components/TabMenu';
 import Login from './Components/Login';
 import Home from './Components/Home';
 import AdBanner from './Components/AdBanner';
-import './Components/TabMenu.css';       // 나중에 로드 (우선순위 높음)
+import './Components/TabMenu.css';
 
-// 임시 컴포넌트 (프로필/주문내역 페이지 확인용)
-const Profile = () => <div style={{ padding: "100px", textAlign: "center" }}><h2>고객 프로필 페이지</h2></div>;
-const Orders = () => <div style={{ padding: "100px", textAlign: "center" }}><h2>주문 내역 페이지</h2></div>;
-
-function App() {
-  // 로컬스토리지에 토큰이 있으면 true, 없으면 false
+function AppContent() {
+  const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('accessToken'));
-  const [message, setMessage] = useState('');
+
+  // 로그인 페이지 여부 확인 (헤더, 푸터, 탭메뉴 숨김 처리용)
+  const isLoginPage = location.pathname === '/login';
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
     setIsLoggedIn(false);
-    setMessage('');
     alert('로그아웃 되었습니다.');
   };
 
@@ -29,48 +26,44 @@ function App() {
   };
 
   return (
-    <Router>
-      <div className="app-main-container">
-        {/* 1. 최상단 고정 헤더 영역 - isLoggedIn 전달 */}
-        <KukjeHeader onSearch={handleSearch} isLoggedIn={isLoggedIn} />
-
-        {/* 2. 중앙 컨텐츠 영역 */}
-        <div className="app-wrapper">
-          {/* 분리된 탭 메뉴 컴포넌트 호출 */}
+    <div className="app-main-container">
+      {/* 로그인 페이지가 아닐 때만 노출 */}
+      {!isLoginPage && (
+        <>
+          <KukjeHeader onSearch={handleSearch} isLoggedIn={isLoggedIn} />
           <TabMenu isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+        </>
+      )}
 
-          <div className="tab-content">
-            {/* tab-content 내부 최상단에 광고 배치 */}
-            <AdBanner />
-            
-            <Routes>
-              {/* 메인 홈 */}
-              <Route path="/" element={<Home isLoggedIn={isLoggedIn} message={message} />} />
-              
-              {/* 로그인 페이지 */}
-              <Route 
-                path="/login" 
-                element={<Login setIsLoggedIn={setIsLoggedIn} setMessage={setMessage} message={message} />} 
-              />
+      <div className="app-wrapper">
+        <div className="tab-content">
+          <Routes>
+            {/* 1. 메인 홈: 광고 + 수직 나열 상품 섹션(Home) */}
+            <Route path="/" element={
+              <>
+                <AdBanner />
+                <Home isLoggedIn={isLoggedIn} />
+              </>
+            } />
 
-              {/* 프로필 및 주문 내역 (로그인 상태에 따른 라우팅 보호 예시) */}
-              <Route 
-                path="/profile" 
-                element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} 
-              />
-              <Route 
-                path="/orders" 
-                element={isLoggedIn ? <Orders /> : <Navigate to="/login" />} 
-              />
-            </Routes>
-          </div>
+            {/* 2. 로그인 페이지: 광고/헤더/푸터 없이 독자적으로 표시 */}
+            <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+
+            {/* 나머지 경로는 홈으로 리다이렉트 */}
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
         </div>
-
-        {/* 3. 최하단 푸터 영역 */}
-        <KukjeFooter />
       </div>
-    </Router>
+
+      {!isLoginPage && <KukjeFooter />}
+    </div>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
+  );
+}

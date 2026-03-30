@@ -1,0 +1,38 @@
+[
+  {
+    "id": 101,
+    "category": "best",
+    "badge": "BEST",
+    "imageUrl": "https://picsum.photos/seed/p101/300/300",
+    "name": "국제몰 프리미엄 게이밍 마우스",
+    "originalPrice": 50000,
+    "discountRate": 20
+  },
+  {
+    "id": 102,
+    "category": "new",
+    "badge": "NEW",
+    "imageUrl": "https://picsum.photos/seed/p102/300/300",
+    "name": "기계식 키보드 (갈축)",
+    "originalPrice": 120000,
+    "discountRate": 15
+  },
+  {
+    "id": 103,
+    "category": "md",
+    "badge": null,
+    "imageUrl": "https://picsum.photos/seed/p103/300/300",
+    "name": "초고속 C타입 케이블 2M",
+    "originalPrice": 15000,
+    "discountRate": 0
+  },
+  {
+    "id": 104,
+    "category": "best",
+    "badge": "HOT",
+    "imageUrl": "https://picsum.photos/seed/p104/300/300",
+    "name": "4K 모니터 32인치",
+    "originalPrice": 450000,
+    "discountRate": 30
+  }
+]
