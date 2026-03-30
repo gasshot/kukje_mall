@@ -2,48 +2,68 @@ import React, { useState, useEffect } from 'react';
 import ProductSection from './ProductSection';
 
 const Home = () => {
-  // 전체 상품 데이터를 저장할 상태
   const [allProducts, setAllProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // 컴포넌트 마운트 시 JSON 데이터 가져오기
   useEffect(() => {
-    // 실제 서버 API 주소로 나중에 대체됩니다.
+    // 분리된 products.json 로드
     const jsonUrl = '/data/products.json'; 
 
     fetch(jsonUrl)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error('데이터를 불러오는데 실패했습니다.');
-        }
+        if (!response.ok) throw new Error('데이터 로드 실패');
         return response.json();
       })
       .then((data) => {
-        setAllProducts(data); // 데이터를 상태에 저장
-        setIsLoading(false); // 로딩 완료
+        setAllProducts(data);
+        setIsLoading(false);
       })
       .catch((error) => {
-        console.error('Error fetching products:', error);
+        console.error('Error:', error);
         setIsLoading(false);
       });
-  }, []); // 빈 배열 []: 처음 한 번만 실행
+  }, []);
 
-  // 카테고리별 데이터 필터링 (서버 API가 있다면 서버에서 처리해서 줌)
-  const bestProducts = allProducts.filter(p => p.category === 'best');
-  const newProducts = allProducts.filter(p => p.category === 'new');
-  const mdProducts = allProducts.filter(p => p.category === 'md');
+  /**
+   * C#의 LINQ처럼 데이터를 조건별로 추출합니다.
+   * 이제는 .category가 아니라 .section 필드를 기준으로 메인 화면을 구성합니다.
+   */
+  const bestProducts = allProducts.filter(p => p.section === 'best');
+  const newProducts = allProducts.filter(p => p.section === 'new');
+  const mdProducts = allProducts.filter(p => p.section === 'md');
 
   if (isLoading) {
-    return <div className="loading container">전체 데이터를 로딩 중입니다...</div>;
+    return (
+      <div className="container" style={{ padding: "100px 0", textAlign: "center" }}>
+        <h3>데이터를 불러오는 중입니다...</h3>
+      </div>
+    );
   }
 
   return (
-    <div className="home-container" style={{ padding: "20px 0" }}>
-      {/* 필터링된 데이터를 각각 넘겨줌 */}
-      <ProductSection title="실시간 베스트" items={bestProducts} />
-      <ProductSection title="신규 입고 아이템" items={newProducts} />
-      <ProductSection title="MD 추천 상품" items={mdProducts} />
-    </div>
+    <main className="home-container" style={{ padding: "20px 0" }}>
+      {/* 1. 실시간 베스트 섹션 (필터링된 배열 전달) */}
+      {bestProducts.length > 0 && (
+        <ProductSection title="실시간 베스트" items={bestProducts} />
+      )}
+
+      {/* 2. 신규 입고 섹션 */}
+      {newProducts.length > 0 && (
+        <ProductSection title="신규 입고 아이템" items={newProducts} />
+      )}
+
+      {/* 3. MD 추천 섹션 */}
+      {mdProducts.length > 0 && (
+        <ProductSection title="MD 추천 상품" items={mdProducts} />
+      )}
+
+      {/* 검색 결과가 아예 없을 때의 예외 처리 */}
+      {allProducts.length === 0 && (
+        <div className="container" style={{ textAlign: "center", padding: "50px" }}>
+          <p>등록된 상품이 없습니다.</p>
+        </div>
+      )}
+    </main>
   );
 };
 

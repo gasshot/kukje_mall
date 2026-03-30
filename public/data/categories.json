@@ -1,0 +1,52 @@
+[
+  {
+    "id": "fashion",
+    "name": "의류/잡화",
+    "sub": [
+      { "id": "m-cloth", "name": "남성의류", "details": ["티셔츠", "셔츠", "슬랙스", "청바지"] },
+      { "id": "w-cloth", "name": "여성의류", "details": ["원피스", "블라우스", "치마", "니트"] },
+      { "id": "shoes", "name": "신발", "details": ["운동화", "구두", "슬리퍼"] },
+      { "id": "bags", "name": "가방/지갑", "details": ["백팩", "숄더백", "반지갑"] }
+    ]
+  },
+  {
+    "id": "beauty",
+    "name": "뷰티/화장품",
+    "sub": [
+      { "id": "skincare", "name": "스킨케어", "details": ["스킨/토너", "로션", "에센스"] },
+      { "id": "makeup", "name": "메이크업", "details": ["쿠션/팩트", "립스틱", "아이섀도우"] },
+      { "id": "perfume", "name": "향수", "details": ["여성향수", "남성향수", "디퓨저"] },
+      { "id": "body-hair", "name": "바디/헤어", "details": ["샴푸", "트리트먼트", "바디워시"] }
+    ]
+  },
+  {
+    "id": "food",
+    "name": "식품/건강",
+    "sub": [
+      { "id": "fresh", "name": "신선식품", "details": ["과일", "채소", "정육", "계란"] },
+      { "id": "processed", "name": "가공식품", "details": ["라면", "통조림", "즉석밥"] },
+      { "id": "health", "name": "건강기능식품", "details": ["비타민", "홍삼", "유산균"] },
+      { "id": "beverage", "name": "음료", "details": ["생수", "탄산음료", "커피"] }
+    ]
+  },
+  {
+    "id": "digital",
+    "name": "가전/디지털",
+    "sub": [
+      { "id": "laptop", "name": "노트북", "details": ["게이밍 노트북", "사무용 노트북", "맥북"] },
+      { "id": "smartphone", "name": "스마트폰", "details": ["아이폰", "갤럭시", "폴더블폰"] },
+      { "id": "tv", "name": "TV", "details": ["OLED TV", "QLED TV", "벽걸이형"] },
+      { "id": "appliance", "name": "생활가전", "details": ["청소기", "공기청정기", "가습기"] }
+    ]
+  },
+  {
+    "id": "living",
+    "name": "생활/가구",
+    "sub": [
+      { "id": "bedding", "name": "침구", "details": ["이불", "베개", "매트리스 커버"] },
+      { "id": "living-room", "name": "거실가구", "details": ["소파", "거실장", "사이드 테이블"] },
+      { "id": "kitchen", "name": "주방용품", "details": ["냄비/팬", "식기세트", "수저세트"] },
+      { "id": "bathroom", "name": "욕실용품", "details": ["수건", "욕실화", "디스펜서"] }
+    ]
+  }
+]
