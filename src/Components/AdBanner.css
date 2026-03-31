@@ -1,93 +1,102 @@
 :root {
-  /* 일관성을 위한 공통 변수 (필요시 호출) */
   --ad-height: 450px;
-  --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+  --bg-dark-half: rgba(0, 0, 0, 0.4);
 }
 
-/* [핵심] 최상위 컨테이너: 외부 여백 및 중앙 정렬 강제 */
+/* 최상위 컨테이너 패딩 강제 제거 (간극 방지) */
 .container.ad-wrapper {
-  max-width: var(--max-width); /* 공통 규격 */
-  margin: 0 auto 40px auto; /* 상단/좌우/하단 여백 */
-  padding: 0 !important; /* 내부 여백 제거하여 배너 꽉 차게 */
-  overflow: hidden; /* 자식 요소인 track이 삐져나오지 않게 가둠 */
+  max-width: var(--max-width, 1200px);
+  margin: 0 auto 40px auto;
+  padding: 0 !important; 
   position: relative;
+  overflow: hidden;
 }
 
-/* 배너 내부 섹션 */
 .ad-section-container {
   width: 100%;
   height: var(--ad-height);
   position: relative;
-  background-color: #eee;
 }
 
-/* 슬라이드 트랙: JS에서 계산된 width와 transform이 적용됨 */
-.ad-track {
-  display: flex;
-  height: 100%;
-  /* 분석 내용 반영: 부드러운 이동을 위한 베지어 곡선 */
-  transition: transform 0.6s var(--transition-smooth);
-  will-change: transform; /* 성능 최적화 */
-}
-
-/* 개별 슬라이드 아이템 */
+/* 배너 본체 */
 .ad-slide-item {
+  width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   color: #fff;
   user-select: none;
-  transition: opacity 0.3s ease;
-  box-sizing: border-box; /* 패딩이나 보더로 인해 너비가 틀어지는 것 방지 */
-}
-
-.ad-slide-item:hover {
-  opacity: 0.9; /* 클릭 유도 효과 반영 */
+  box-sizing: border-box;
 }
 
 .ad-title {
-  font-size: 2.5rem; /* 시인성을 위해 소폭 상향 */
-  font-weight: 700;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-  margin: 0;
+  font-size: 3rem;
+  font-weight: 800;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* 인디케이터 스타일 (시인성 보강 버전) */
-.ad-indicator-wrapper {
+/* [수정] 인디케이터 래퍼 */
+.ad-indicator-wrapper.side-menu {
   position: absolute;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
   display: flex;
-  gap: 8px;
+  flex-direction: column;
+  gap: 0; 
   z-index: 10;
-  background: rgba(0, 0, 0, 0.2); /* 배경 농도 소폭 상향 */
-  padding: 8px 16px;
-  border-radius: 20px;
-  backdrop-filter: blur(6px); /* 블러 효과 강화 */
-  pointer-events: auto; /* 클릭 가능하도록 명시 */
+  /* 전체 래퍼의 배경이나 그림자는 유지 */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
+/* [기본 상태] */
 .ad-indicator-btn {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: none;
-  background-color: rgba(255, 255, 255, 0.4);
+  position: relative;
+  width: 160px;
+  padding: 14px 18px;
+  background-color: #ffffff;
+  color: #111111;
   cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: none;
+  /* 기본 구분선: 아래쪽에만 연하게 */
+  border-bottom: 1px solid #eeeeee;
+  transition: all 0.2s ease;
+  z-index: 1;
 }
 
-.ad-indicator-btn:hover {
-  background-color: rgba(255, 255, 255, 0.8);
-}
-
+/* [호버 및 활성 상태] 파란색 박스로 감싸기 */
+.ad-indicator-btn:hover,
 .ad-indicator-btn.active {
-  background-color: #fff;
-  width: 24px; /* 활성화 시 바 형태 반영 */
-  border-radius: 4px;
+  /* 배경과 글자색은 그대로 유지 */
+  background-color: #ffffff;
+  color: #111111;
+  
+  /* 핵심: 파란색 박스 테두리 */
+  outline: 2px solid #2563eb; /* 테두리 두께와 색상 */
+  outline-offset: -2px;       /* 테두리가 안쪽으로 그려지게 설정 */
+  
+  /* 다른 버튼의 구분선보다 위로 올라오도록 설정 */
+  z-index: 2; 
+}
+
+/* 마지막 버튼의 구분선 제거 */
+.ad-indicator-btn:last-child {
+  border-bottom: none;
+}
+
+.indicator-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #999999;
+}
+
+.indicator-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
 }

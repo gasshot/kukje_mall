@@ -1,0 +1,172 @@
+/* Signup.css */
+
+/* 1. 전체 컨테이너 및 배경 설정 */
+.signup-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 0;
+  background-color: var(--bg);
+  min-height: 100vh;
+}
+
+/* 🚩 로고 스타일(.signup-logo 등)은 KukjeLogo.css에서 처리하므로 삭제 */
+
+/* 2. 카드 패널 (중앙 박스) */
+.signup-card-panel {
+  width: 100%;
+  margin-top: 30px;
+  max-width: 460px;
+  padding: 0 20px;
+}
+
+.signup-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+  text-align: left;
+}
+
+/* 3. 입력 필드 그룹 (일체형 박스 디자인) */
+.input-box-group {
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  background-color: #fff;
+  margin-bottom: 25px;
+  overflow: hidden;
+  /* 테두리 안쪽 요소 넘침 방지 */
+}
+
+.signup-form .input-row {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+
+.signup-form .input-row:last-child {
+  border-bottom: none;
+}
+
+.signup-form .input-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ccc;
+  border-right: 1px solid #eee;
+}
+
+.signup-form .input-row input {
+  flex: 1;
+  border: none;
+  padding: 15px;
+  font-size: 0.95rem;
+  outline: none;
+  color: var(--text);
+  background: transparent;
+}
+
+.signup-form .input-row input::placeholder {
+  color: #ccc;
+}
+
+/* 4. 약관 동의 섹션 */
+.agreement-section {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.agree-all-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 1.05rem;
+}
+
+.agree-all-label input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.bold-text {
+  font-weight: bold;
+  color: #333;
+}
+
+.agree-sub-text {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 8px 0 15px 30px;
+  line-height: 1.5;
+}
+
+/* 5. 개별 약관 리스트 박스 */
+.agree-list-container {
+  border: 1px solid #eee;
+  padding: 15px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.agree-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.agree-item label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.agree-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.arrow-icon {
+  color: #ccc;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+/* 6. 회원가입 버튼 */
+.signup-submit-btn {
+  width: 100%;
+  background-color: var(--main-logo-color);
+  color: white;
+  border: none;
+  padding: 16px;
+  font-size: 1.15rem;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.signup-submit-btn:hover {
+  opacity: 0.9;
+}
+
+/* 7. 반응형 대응 (모바일) */
+@media (max-width: 480px) {
+  .signup-page-container {
+    padding-top: 30px;
+  }
+
+  .signup-card-panel {
+    padding: 0 15px;
+  }
+}

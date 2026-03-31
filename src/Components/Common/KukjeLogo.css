@@ -1,0 +1,53 @@
+/* KukjeLogo.css */
+
+.k-logo-container {
+  display: inline-flex;
+  align-items: center;
+  font-weight: bold;
+  cursor: pointer;
+  letter-spacing: -1px;
+  user-select: none; /* 드래그 방지 */
+  transition: transform 0.2s ease-in-out;
+}
+
+/* 마우스 호버 시 살짝 커지는 효과 (선택 사항) */
+/*.k-logo-container:hover {
+  transform: scale(1.02);
+}
+*/
+.logo-kukje {
+  color: #555; /* 차분한 그레이 */
+}
+
+.logo-mall {
+  color: var(--main-logo-color); /* :root에 정의된 메인 블루 */
+}
+
+/* -------------------------------------------
+   사이즈 제어 (Props에 대응)
+------------------------------------------- */
+
+/* 1. Large: 로그인, 회원가입 페이지용 */
+.k-logo-container.large {
+  font-size: 3rem;
+}
+
+/* 2. Medium: 일반 헤더용 */
+.k-logo-container.medium {
+  font-size: 2.2rem;
+}
+
+/* 3. Small: 푸터나 모바일 서브 메뉴용 */
+.k-logo-container.small {
+  font-size: 1.4rem;
+}
+
+/* 모바일 대응: 화면이 작아지면 로고 크기도 소폭 조정 */
+@media (max-width: 768px) {
+  .k-logo-container.large {
+    font-size: 2.4rem;
+  }
+  .k-logo-container.medium {
+    font-size: 1.8rem;
+  }
+}

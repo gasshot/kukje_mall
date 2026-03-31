@@ -1,0 +1,123 @@
+/* Login.css */
+
+.login-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+  background-color: var(--bg);
+}
+
+.login-card-panel {
+  width: 100%;
+  margin-top: 30px;
+  max-width: 460px;
+}
+
+/* 탭 스타일 */
+.login-tabs {
+  display: flex;
+  border-bottom: 2px solid #eeeeee;
+  margin-bottom: 20px;
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 12px 0;
+  font-size: 0.95rem;
+  color: #666;
+  cursor: pointer;
+}
+.tab.active {
+  color: var(--main-logo-color);
+  border-bottom: 3px solid var(--main-logo-color);
+  font-weight: bold;
+  margin-bottom: -3px;
+}
+
+/* 입력창 로직 */
+.login-form-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+.input-row:first-child { border-bottom: none; } /* 위아래 입력창 붙이기 */
+
+.input-icon-box {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  color: #ccc;
+  border-right: 1px solid #eee;
+}
+
+.input-row input {
+  flex: 1;
+  border: none;
+  padding: 15px;
+  font-size: 1rem;
+  outline: none;
+}
+
+/* 자동 로그인 & 찾기 */
+.login-helper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0;
+  font-size: 0.85rem;
+  color: #555;
+}
+.keep-login { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+.find-info { color: var(--main-logo-color); cursor: pointer; }
+
+/* 버튼 시리즈 */
+.btn-login-submit {
+  background-color: var(--main-logo-color);
+  color: white;
+  border: none;
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.divider {
+  height: 1px;
+  background-color: #eee;
+  margin: 15px 0;
+}
+
+.btn-signup-link {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 13px;
+  font-size: 1.05rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-signup-link:hover { background-color: #f9f9f9; }
+
+/* 에러 메시지 */
+.login-error-msg {
+  color: #e23e3e;
+  font-size: 0.85rem;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.login-simple-footer {
+  margin-top: 50px;
+  font-size: 0.8rem;
+  color: #999;
+}

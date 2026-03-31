@@ -20,6 +20,7 @@
   /* 레이아웃 변수 최적화 */
   --max-width: 1200px;
   --nav-height: 60px;  
+  --ad-height: 450px;
   --padding-mobile: 16px;
   --padding-desktop: 24px;
   
