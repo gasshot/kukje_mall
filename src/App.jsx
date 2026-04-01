@@ -17,11 +17,21 @@ function AppContent() {
   const authPaths = ['/login', '/signup'];
   const isAuthPage = authPaths.includes(location.pathname);
 
-  // 로그아웃 핸들러
+// 로그아웃 핸들러 보완
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
+    // 1. 토큰 삭제
+    localStorage.removeItem('accessToken'); 
+    
+    // 2. 상태 즉시 업데이트
     setIsLoggedIn(false);
+    
+    // 3. (선택사항) 모든 로컬 스토리지 비우기 - 확실한 방법
+    localStorage.clear(); 
+
     alert('로그아웃 되었습니다.');
+    
+    // 4. 홈으로 이동시키며 상태 초기화
+    window.location.href = '/'; 
   };
 
   // 검색 핸들러
@@ -35,7 +45,7 @@ function AppContent() {
       {!isAuthPage && (
         <>
           <KukjeHeader onSearch={handleSearch} isLoggedIn={isLoggedIn} />
-          <TabMenu isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+          <TabMenu/>
         </>
       )}
 

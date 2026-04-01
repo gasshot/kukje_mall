@@ -2,13 +2,17 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import http from '../../api/http';
 import { HiOutlineMail, HiOutlineLockClosed } from 'react-icons/hi';
-// 1. 공통 로고 컴포넌트 임포트 (폴더 구조에 맞춰 경로 수정)
-import KukjeLogo from '../Common/KukjeLogo'; 
+import KukjeLogo from '../Common/KukjeLogo';
+import useAuthStore from '../../store/useAuthStore'; // 1. 스토어 임포트
 import './Login.css';
 
-function Login({ setIsLoggedIn, setMessage, message }) {
+function Login() {
   const [formData, setFormData] = useState({ id: '', pw: '' });
+  const [localMessage, setLocalMessage] = useState(''); // 내부 에러 메시지용
   const navigate = useNavigate();
+
+  // 2. Zustand 스토어에서 login 액션 가져오기
+  const login = useAuthStore((state) => state.login);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,20 +21,25 @@ function Login({ setIsLoggedIn, setMessage, message }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLocalMessage(''); // 시도 전 메시지 초기화
+
     try {
       const response = await http.post('/login', formData);
+
+      // 서버 응답 구조에 맞춰 조건 확인 (예: response.accessToken)
       if (response.accessToken) {
-        localStorage.setItem('accessToken', response.accessToken);
-        setIsLoggedIn(true);
-        setMessage(`${response.user.name}님, 환영합니다!`);
-        navigate('/'); 
+        // 3. Zustand의 login 액션 실행 (이름과 토큰 저장)
+        // 서버에서 사용자 이름을 안 준다면 우선 아이디를 넘겨도 됩니다.
+        login(response.user?.name || formData.id, response.accessToken);
+
+        navigate('/');
       }
     } catch (error) {
-      setMessage(error.response?.data?.message || '아이디 또는 비밀번호가 일치하지 않습니다.');
+      // axios 에러 객체에서 서버가 보내준 에러 메시지 추출
+      const errorMessage = error.response?.data?.message || '아이디 또는 비밀번호가 일치하지 않습니다.';
+      setLocalMessage(errorMessage);
     }
   };
-
-  // 기존 handleLogoClick은 KukjeLogo 컴포넌트 내부로 이동했으므로 삭제 가능합니다.
 
   const handleSignupClick = () => {
     navigate('/signup');
@@ -42,7 +51,6 @@ function Login({ setIsLoggedIn, setMessage, message }) {
 
   return (
     <div className="login-page-container container">
-      {/* 2. 기존 로고 HTML을 공통 컴포넌트로 대체 (큰 사이즈 적용) */}
       <KukjeLogo size="large" />
 
       <div className="login-card-panel">
@@ -55,24 +63,24 @@ function Login({ setIsLoggedIn, setMessage, message }) {
         <form onSubmit={handleLogin} className="login-form-main">
           <div className="input-row">
             <div className="input-icon-box"><HiOutlineMail size="20" /></div>
-            <input 
-              type="text" 
-              name="id" 
-              placeholder="아이디(이메일)" 
+            <input
+              type="text"
+              name="id"
+              placeholder="아이디(이메일)"
               value={formData.id}
-              onChange={handleChange} 
-              required 
+              onChange={handleChange}
+              required
             />
           </div>
           <div className="input-row">
             <div className="input-icon-box"><HiOutlineLockClosed size="20" /></div>
-            <input 
-              type="password" 
-              name="pw" 
-              placeholder="비밀번호" 
+            <input
+              type="password"
+              name="pw"
+              placeholder="비밀번호"
               value={formData.pw}
-              onChange={handleChange} 
-              required 
+              onChange={handleChange}
+              required
             />
           </div>
 
@@ -86,11 +94,11 @@ function Login({ setIsLoggedIn, setMessage, message }) {
           </div>
 
           <button type="submit" className="btn-login-submit">로그인</button>
-          
+
           <div className="divider"></div>
 
-          <button 
-            type="button" 
+          <button
+            type="button"
             className="btn-signup-link"
             onClick={handleSignupClick}
           >
@@ -98,7 +106,8 @@ function Login({ setIsLoggedIn, setMessage, message }) {
           </button>
         </form>
 
-        {message && <p className="login-error-msg">{message}</p>}
+        {/* 에러 메시지 출력 */}
+        {localMessage && <p className="login-error-msg">{localMessage}</p>}
       </div>
 
       <footer className="login-simple-footer">
