@@ -33,8 +33,8 @@ const AdBanner = () => {
     <div className="container ad-wrapper">
       <div 
         className="ad-section-container"
-        onMouseEnter={() => setIsPaused(true)} 
-        onMouseLeave={() => setIsPaused(false)}
+        onMouseEnter={() => setIsPaused(true)} // 전체 컨테이너 호버 시 스왑 중지
+        onMouseLeave={() => setIsPaused(false)} // 이탈 시 재개
       >
         {/* 즉각 전환 배너 영역 */}
         <div 
@@ -51,9 +51,9 @@ const AdBanner = () => {
             <button
               key={ad.id}
               className={`ad-indicator-btn ${index === currentIndex ? 'active' : ''}`}
+              onMouseEnter={() => setCurrentIndex(index)} // 호버 즉시 해당 광고로 변경
               onClick={() => setCurrentIndex(index)}
             >
-              {/* <span className="indicator-label">{index + 1}</span> */}
               <span className="indicator-text">{ad.title}</span>
             </button>
           ))}

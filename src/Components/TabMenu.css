@@ -1,8 +1,8 @@
 /* 탭 메뉴 바 전체 배경 (배경만 화면 끝까지) */
 .tab-menu-bg-wrapper {
   width: 100%;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid var(--border);
+  /* background-color: #f8f9fa;
+  border-bottom: 1px solid var(--border); */
 }
 
 /* [핵심] container가 기준점이 되어 1200px을 강제함 */
@@ -182,4 +182,40 @@
   justify-content: center;
   height: 100%;
   color: #bbb;
+}
+
+/* 수평 메뉴를 감싸는 컨테이너 */
+.horizontal-menu-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1; /* 남은 공간을 차지하여 메뉴를 우측으로 나열 */
+  height: 100%;
+  padding-left: 30px; /* '전체 카테고리' 버튼과의 간격 */
+  gap: 40px; /* 메뉴 사이의 여유로운 간격 */
+}
+
+/* 개별 메뉴 아이템 */
+.menu-item {
+  font-size: 16px;
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  /* transition: color 0.2s; */
+}
+
+.menu-item:hover {
+  color: var(--main-logo-color);
+  text-decoration-line: underline;
+}
+
+.menu-item:hover::after {
+  width: 100%;
+}
+
+/* [보정] nav 태그가 버튼의 폭만큼만 차지하도록 수정 */
+.tab-menu-nav {
+  width: var(--category-width);
+  height: 100%;
+  flex-shrink: 0; /* 폭 고정 */
 }

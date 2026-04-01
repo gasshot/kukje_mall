@@ -1,0 +1,26 @@
+.menu-item-container {
+  display: flex;
+  align-items: center; /* 아이콘과 텍스트 수직 중앙 정렬 */
+  gap: 8px;            /* 아이콘과 텍스트 사이 간격 */
+  cursor: pointer;
+  height: 100%;        /* 부모 높이에 맞춤 */
+  transition: all 0.2s ease;
+}
+
+.menu-item-icon {
+  width: 24px;         /* 이미지 적정 크기 */
+  height: 24px;
+  object-fit: contain; /* 이미지 비율 유지 */
+}
+
+.menu-item-text {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+/* 호버 시 텍스트 색상 변경 (기존 GNB 스타일 유지) */
+.menu-item-container:hover .menu-item-text {
+  color: var(--main-logo-color);
+}
