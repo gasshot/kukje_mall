@@ -7,6 +7,8 @@ import Login from './Components/Auth/Login';
 import Signup from './Components/Auth/Signup';
 import Home from './Components/Home';
 import AdBanner from './Components/AdBanner';
+import ProductDetail from './Components/ProductDetail';
+
 import './Components/TabMenu.css';
 
 function AppContent() {
@@ -17,21 +19,21 @@ function AppContent() {
   const authPaths = ['/login', '/signup'];
   const isAuthPage = authPaths.includes(location.pathname);
 
-// 로그아웃 핸들러 보완
+  // 로그아웃 핸들러 보완
   const handleLogout = () => {
     // 1. 토큰 삭제
-    localStorage.removeItem('accessToken'); 
-    
+    localStorage.removeItem('accessToken');
+
     // 2. 상태 즉시 업데이트
     setIsLoggedIn(false);
-    
+
     // 3. (선택사항) 모든 로컬 스토리지 비우기 - 확실한 방법
-    localStorage.clear(); 
+    localStorage.clear();
 
     alert('로그아웃 되었습니다.');
-    
+
     // 4. 홈으로 이동시키며 상태 초기화
-    window.location.href = '/'; 
+    window.location.href = '/';
   };
 
   // 검색 핸들러
@@ -45,7 +47,7 @@ function AppContent() {
       {!isAuthPage && (
         <>
           <KukjeHeader onSearch={handleSearch} isLoggedIn={isLoggedIn} />
-          <TabMenu/>
+          <TabMenu />
         </>
       )}
 
@@ -65,6 +67,9 @@ function AppContent() {
 
             {/* 회원가입 페이지 */}
             <Route path="/signup" element={<Signup />} />
+
+            {/* 2. 상세 페이지: /product/1 등의 경로로 접속 시 노출됨 */}
+            <Route path="/product/:id" element={<ProductDetail />} />
 
             {/* 나머지 경로는 홈으로 리다이렉트 */}
             <Route path="*" element={<Navigate to="/" />} />

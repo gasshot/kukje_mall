@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigation } from '../hooks/useNavigation';
 import './AdBanner.css';
 
+// 이미지 임포트
+import adImg1 from '../assets/001.png';
+import adImg2 from '../assets/002.png';
+import adImg3 from '../assets/003.png';
+import adImg4 from '../assets/004.png';
+import adImg5 from '../assets/005.png';
+
 const AdBanner = () => {
+  const { goToProduct } = useNavigation();
+
+  // 1. ID값을 실제 JSON 데이터(101~150)와 일치시킴
   const adsData = [
-    { id: 1, title: "특가 세일", color: "#6c5ce7", link: "/1" },
-    { id: 2, title: "신규 가입", color: "#00b894", link: "/2" },
-    { id: 3, title: "한정 수량", color: "#e17055", link: "/3" },
-    { id: 4, title: "무료 배송", color: "#0984e3", link: "/4" },
-    { id: 5, title: "포인트 증정", color: "#d63031", link: "/5" },
+    { id: 101, title: "특가 세일", img: adImg1 },
+    { id: 102, title: "신규 가입", img: adImg2 },
+    { id: 103, title: "한정 수량", img: adImg3 },
+    { id: 107, title: "수분 앰플", img: adImg4 }, // 예시 ID 수정
+    { id: 111, title: "사골 곰탕", img: adImg5 }, // 예시 ID 수정
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,12 +28,13 @@ const AdBanner = () => {
     if (adsData.length <= 1 || isPaused) return;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % adsData.length);
-    }, 5000); 
+    }, 5000);
     return () => clearInterval(timer);
   }, [adsData.length, isPaused]);
 
-  const handleAdClick = (ad) => {
-    console.log(`[API 시뮬레이션] ID: ${ad.id}, 링크: ${ad.link}`);
+  // 2. 인자값을 객체가 아닌 id로 명확히 전달받음
+  const handleAdClick = (id) => {
+    goToProduct(id); 
   };
 
   if (!adsData || adsData.length === 0) return null;
@@ -31,27 +43,32 @@ const AdBanner = () => {
 
   return (
     <div className="container ad-wrapper">
-      <div 
+      <div
         className="ad-section-container"
-        onMouseEnter={() => setIsPaused(true)} // 전체 컨테이너 호버 시 스왑 중지
-        onMouseLeave={() => setIsPaused(false)} // 이탈 시 재개
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
       >
-        {/* 즉각 전환 배너 영역 */}
-        <div 
-          className="ad-slide-item" 
-          style={{ backgroundColor: currentAd.color }}
-          onClick={() => handleAdClick(currentAd)}
+        <div
+          className="ad-slide-item"
+          style={{
+            backgroundImage: `url(${currentAd.img})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+          // 3. 클릭 시 객체가 아닌 currentAd.id를 전달
+          onClick={() => handleAdClick(currentAd.id)}
         >
-          <h2 className="ad-title">{currentAd.title}</h2>
+          <div className="ad-text-overlay">
+            <h2 className="ad-title">{currentAd.title}</h2>
+          </div>
         </div>
 
-        {/* 텍스트 기반 세로형 인디케이터 */}
         <div className="ad-indicator-wrapper side-menu">
           {adsData.map((ad, index) => (
             <button
               key={ad.id}
               className={`ad-indicator-btn ${index === currentIndex ? 'active' : ''}`}
-              onMouseEnter={() => setCurrentIndex(index)} // 호버 즉시 해당 광고로 변경
+              onMouseEnter={() => setCurrentIndex(index)}
               onClick={() => setCurrentIndex(index)}
             >
               <span className="indicator-text">{ad.title}</span>
